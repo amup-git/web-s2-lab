@@ -1,7 +1,7 @@
 $(function() {
   loadRecipies();
-  $("#recipes").on("click", ".btn-danger", handleDelete);
-  $("#recipes").on("click", ".btn-warning", handleUpdate);
+  $("#albums").on("click", ".btn-danger", handleDelete);
+  $("#albums").on("click", ".btn-warning", handleUpdate);
   $("#addBtn").click(addRecipe);
   $("#updateSave").click(function() {
     var id = $("#updateId").val();
@@ -64,19 +64,19 @@ function loadRecipies() {
     url: "https://jsonplaceholder.typicode.com/albums",
     method: "GET",
     error: function(response) {
-      var recipes = $("#recipes");
-      recipes.html("An Error has occured");
+      var albums = $("#albums");
+      albums.html("An Error has occured");
     },
     success: function(response) {
       console.log(response);
-      var recipes = $("#recipes");
-      recipes.empty();
+      var albums = $("#albums");
+      albums.empty();
       for (var i = 0; i < response.length; i++) {
         var rec = response[i];
-        recipes.append(
+        albums.append(
           `<div class="recipe" data-id="${rec.id}"><h3>${rec.title}</h3><p><button class="btn btn-danger btn-sm float-right">delete</button><button class="btn btn-warning btn-sm float-right">Edit</button></p><br></div>`
         );
-        // recipes.append("<div><h3>" + rec.title + "</h3></div>");
+        // albums.append("<div><h3>" + rec.title + "</h3></div>");
       }
     }
   });

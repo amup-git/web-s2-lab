@@ -1,15 +1,15 @@
 $(function() {
   loadRecipies();
-  $("#recipes").on("click", ".btn-danger", handleDelete);
-  $("#recipes").on("click", ".btn-warning", handleUpdate);
+  $("#users").on("click", ".btn-danger", handleDelete);
+  $("#users").on("click", ".btn-warning", handleUpdate);
   $("#addBtn").click(addRecipe);
   $("#updateSave").click(function() {
     var id = $("#updateId").val();
-    var name = $("#updateTitle").val();
-    var email = $("#updateBody").val();
+    var name = $("#updateName").val();
+    var email = $("#updateEmail").val();
     if(!email.includes(".com") || !email.includes("@"))
     {
-      alert("Incorrect Email")
+      $("#updateHelpId").val("Incorrect Email, must contain @ and .com");
       return;
     }
     $.ajax({
@@ -32,8 +32,8 @@ function handleUpdate() {
     response
   ) {
     $("#updateId").val(response.id);
-    $("#updateTitle").val(response.name);
-    $("#updateBody").val(response.email);
+    $("#updateName").val(response.name);
+    $("#updateEmail").val(response.email);
     $("#updateModal").modal("show");
   });
 }
@@ -43,7 +43,7 @@ function addRecipe() {
 
   if(!email.includes(".com") || !email.includes("@"))
   {
-    alert("Incorrect Email")
+    $("#emailHelp").val("Incorrect Email, must contain @ and .com");
     return;
   }
   $.ajax({
@@ -77,19 +77,19 @@ function loadRecipies() {
     url: "https://jsonplaceholder.typicode.com/users",
     method: "GET",
     error: function(response) {
-      var recipes = $("#recipes");
-      recipes.html("An Error has occured");
+      var users = $("#users");
+      users.html("An Error has occured");
     },
     success: function(response) {
       console.log(response);
-      var recipes = $("#recipes");
-      recipes.empty();
+      var users = $("#users");
+      users.empty();
       for (var i = 0; i < response.length; i++) {
         var rec = response[i];
-        recipes.append(
+        users.append(
           `<div class="recipe" data-id="${rec.id}"><h3>${rec.name}</h3><p><button class="btn btn-danger btn-sm float-right">delete</button><button class="btn btn-warning btn-sm float-right">Edit</button> ${rec.email}</p></div>`
         );
-        // recipes.append("<div><h3>" + rec.title + "</h3></div>");
+        // users.append("<div><h3>" + rec.title + "</h3></div>");
       }
     }
   });
